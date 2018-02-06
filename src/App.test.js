@@ -5,6 +5,7 @@ import { shallow } from 'enzyme';
 import { mount } from 'enzyme';
 import App from './App';
 import Setup from './Setup';
+import { wrap } from 'module';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
@@ -42,7 +43,14 @@ it('creates a new task with the correct text', () => {
     expect(node.text()).toBe(tasks[i]);
   });
 })
-
+it('fail when the task is empty', () => {
+  const wrapper = mount(<App/>)
+  const newTask = wrapper.find('#new-task')
+  newTask.getElement.value = ''
+  newTask.simulate('change', {target: {value: ''}})
+  wrapper.find('form').simulate('submit', newTask)
+  expect(wrapper.find('li').length).toBe(3)
+})
 it('the text input value is reset after creating task', () => {
   const wrapper = mount(<App />);
   const newTask = wrapper.find('#new-task');

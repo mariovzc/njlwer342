@@ -31,6 +31,7 @@ class App extends Component {
               onChange={this.handleText}
               value={this.state.task}
               placeholder='Ingresa una tarea y oprime Enter'
+              required
             />
           </form>
         </div>
@@ -42,10 +43,12 @@ class App extends Component {
   }
   handleSubmit (event) {
     event.preventDefault()
-    this.setState({
-      tasks: this.state.tasks.concat(this.state.task),
-      task: ''
-    })
+    if (this.state.task !== '') {
+      this.setState({
+        tasks: this.state.tasks.concat(this.state.task),
+        task: ''
+      })
+    }
   }
 }
 

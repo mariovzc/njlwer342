@@ -6,7 +6,7 @@ class App extends Component {
   constructor () {
     super()
     this.state = {
-      task: '',
+      newTask: '',
       tasks: ['Sacar la ropa', 'Hacer la cama', 'Leer un rato']
     }
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -29,7 +29,7 @@ class App extends Component {
               type='text'
               id='new-task'
               onChange={this.handleText}
-              value={this.state.task}
+              value={this.state.newTask}
               placeholder='Ingresa una tarea y oprime Enter'
               required
             />
@@ -39,14 +39,16 @@ class App extends Component {
     )
   }
   handleText (event) {
-    this.setState({task: event.target.value})
+    this.setState({newTask: event.target.value})
   }
   handleSubmit (event) {
     event.preventDefault()
+    const newTask = this.state.newTask
+    const oldTask = this.state.tasks
     if (this.state.task !== '') {
       this.setState({
-        tasks: this.state.tasks.concat(this.state.task),
-        task: ''
+        tasks: [...oldTask, newTask],
+        newTask: ''
       })
     }
   }
